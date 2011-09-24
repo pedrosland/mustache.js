@@ -217,6 +217,8 @@ var Mustache = function() {
           return "";
         case ">": // render partial
           return that.render_partial(name, context, partials);
+        case "_": // call function
+          return that.call_function(name, context);
         case "{": // the triple mustache is unescaped
           return that.find(name, context);
         default: // escape the value
@@ -254,6 +256,14 @@ var Mustache = function() {
         );
       }
       return text.replace(arguments.callee.sRE, '\\$1');
+    },
+    
+    /*
+      call global functions with params
+    */
+    call_function: function(name, context) {
+      console.log(name);
+      return "__function__";
     },
 
     /*
