@@ -202,7 +202,7 @@ var Mustache = function() {
 
       var new_regex = function() {
         return that.getCachedRegex("render_tags", function(otag, ctag) {
-          return new RegExp(otag + "(=|!|>|\\{|%)?([^\\/#\\^]+?)\\1?" + ctag + "+", "g");
+          return new RegExp(otag + "(=|!|>|_|\\{|%)?([^\\/#\\^]+?)\\1?" + ctag + "+", "g");
         });
       };
 
@@ -289,7 +289,7 @@ var Mustache = function() {
         return value.apply(context);
       }
       if(value !== undefined) {
-        var ctx = context;
+        /*var ctx = context;
         var parts = name.split(".");
         while(parts.length) {
           p = parts.shift();
@@ -299,7 +299,7 @@ var Mustache = function() {
           }
           ctx = ctx[p];
         }
-        return ctx
+        return ctx*/
       }
       // silently ignore unkown variables
       return "";
@@ -329,6 +329,7 @@ var Mustache = function() {
       });
     },
 
+    // by @langalex, support for arrays of strings
     create_context: function(_context) {
       if(this.is_object(_context)) {
         return _context;
