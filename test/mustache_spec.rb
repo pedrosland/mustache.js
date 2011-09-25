@@ -24,6 +24,7 @@ end
 
 JS_PATH = `which js`.strip()
 JSC_PATH = "/System/Library/Frameworks/JavaScriptCore.framework/Versions/A/Resources/jsc"
+JAVA_PATH = `which java`.strip()
 RHINO_JAR = "org.mozilla.javascript.tools.shell.Main"
 
 engines_run = 0
@@ -216,7 +217,10 @@ describe "mustache" do
   end
 
   context "running in Rhino (Mozilla)" do
-    if !`java #{RHINO_JAR} 'foo' 2>&1`.match(/ClassNotFoundException/)
+    p JAVA_PATH
+    if JAVA_PATH.empty?
+      puts "\nSkipping tests in Rhino (Java was not found)\n"
+    elsif !`java #{RHINO_JAR} 'foo' 2>&1`.match(/ClassNotFoundException/)
       before(:each) do
         @run_js = :run_js_rhino
       end
